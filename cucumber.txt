@@ -1,0 +1,150 @@
+#Author: your.email@your.domain.com
+#Keywords Summary :
+#Feature: List of scenarios.
+#Scenario: Business rule through list of steps with arguments.
+#Given: Some precondition step
+#When: Some key actions
+#Then: To observe outcomes or validation
+#And,But: To enumerate more Given,When,Then steps
+#Scenario Outline: List of steps for data-driven as an Examples and <placeholder>
+#Examples: Container for s table
+#Background: List of steps run before each of the scenarios
+#""" (Doc Strings)
+#| (Data Tables)
+#@ (Tags/Labels):To group Scenarios
+#<> (placeholder)
+#""
+## (Comments)
+#Sample Feature Definition Template
+@tag
+Feature: Title of your feature
+  I want to use this template for my feature file
+
+  @tag1
+  Scenario: Title of your scenario
+    Given I want to write a step with precondition
+    And some other precondition
+    When I complete action
+    And some other action
+    And yet another action
+    Then I validate the outcomes
+    And check more outcomes
+
+  @tag2
+  Scenario Outline: Title of your scenario outline
+    Given I want to write a step with <name>
+    When I check for the <value> in step
+    Then I verify the <status> in step
+
+    Examples: 
+      | name  | value | status  |
+      | name1 |     5 | success |
+      | name2 |     7 | Fail    |
+
+
+
+Feature: login validation
+  I want to use this template for my feature file
+
+
+  Scenario: Valid login
+    Given I want to launch a Chrome browser to open "http://demo.automationtesting.in/"
+    When Login by email id and click enter
+    And Enter details and hobby
+    And Enter skills and country
+    And Enter dob and password
+    Then Click submit
+   
+
+
+package stepdefinition;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.PageFactory;
+
+import browsers.Choosebrowsers;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+import pages.Regpage;
+import pages.Startpage;
+
+
+public class Logintest {
+
+	
+	@Given("I want to launch a Chrome browser to open {string}")
+	public void i_want_to_launch_a_Chrome_browser_to_open(String string) {
+		WebDriver d;
+		
+		d=Choosebrowsers.initilization("chrome");
+		
+	    // Write code here that turns the phrase above into concrete actions
+	    
+	}
+	WebDriver d;
+
+	@When("Login by email id and click enter")
+	public void login_by_email_id_and_click_enter() {
+		
+		Startpage sp= new Startpage(d);
+		sp.text("abc@gmail.com");
+	    // Write code here that turns the phrase above into concrete actions
+	    
+	}
+
+	@When("Enter details and hobby")
+	public void enter_fdetails_and_hobby() {
+		
+		Regpage obj=PageFactory.initElements(d, Regpage.class);
+		obj.details();
+		obj.hobby();
+	    // Write code here that turns the phrase above into concrete actions
+	   
+	}
+
+	@When("Enter skills and country")
+	public void enter_skills_and_country() {
+		Regpage obj=PageFactory.initElements(d, Regpage.class);
+		obj.skills();;
+		obj.country();
+	    // Write code here that turns the phrase above into concrete actions
+	   
+	}
+
+	@When("Enter dob and password")
+	public void enter_dob_and_password() {
+		Regpage obj=PageFactory.initElements(d, Regpage.class);
+		obj.password();
+		obj.DOB();
+	    // Write code here that turns the phrase above into concrete actions
+	 
+	}
+	@Then("Click submit")
+	public void click_submit() {
+		Regpage obj=PageFactory.initElements(d, Regpage.class);
+		
+		obj.submit();
+	}
+	    // Write code here that turns the phrase above into concrete actions
+	    
+}
+
+
+
+package stepdefinition;
+
+
+import cucumber.api.junit.Cucumber;
+
+import org.junit.runner.RunWith;
+
+import cucumber.api.CucumberOptions;
+
+@RunWith(Cucumber.class)
+@CucumberOptions(features="src/test/java/feature",glue="stepdefinition")
+
+public class Testrunner {
+
+}
+
